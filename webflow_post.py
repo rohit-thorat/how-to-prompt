@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Title
-st.title("📝 Webflow Post Creator")
+st.title("📝 Prompt Post Creator")
 st.markdown("---")
 
 # Webflow API Configuration from environment variables
