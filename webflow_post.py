@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Title
-st.title("📝 Prompt Post Creator")
+st.title("📝 Webflow Post Creator")
 st.markdown("---")
 
 # Webflow API Configuration from environment variables
@@ -77,6 +77,15 @@ with col2:
         st.image(output_image, caption="Output Image", use_container_width=True)
 
 # st.markdown("---")
+
+# Title text field
+st.subheader("📌 Title")
+title_text = st.text_input(
+    "Enter post title",
+    placeholder="Enter a title for your post...",
+    help="This will be the title/name of your post",
+    key=f"title_text_{st.session_state.form_counter}"
+)
 
 # Prompt text area
 st.subheader("✍️ Prompt")
@@ -355,6 +364,8 @@ if not st.session_state.get('post_success', False) and post_button:
         st.error("⚠️ Please upload an input image")
     elif not output_image:
         st.error("⚠️ Please upload an output image")
+    elif not title_text:
+        st.error("⚠️ Please enter a title")
     elif not prompt_text:
         st.error("⚠️ Please enter a prompt")
     else:
@@ -363,7 +374,7 @@ if not st.session_state.get('post_success', False) and post_button:
         st.rerun()
 
 # Continue processing if is_posting is True
-if st.session_state.get('is_posting', False) and not st.session_state.get('post_success', False) and input_image and output_image and prompt_text:
+if st.session_state.get('is_posting', False) and not st.session_state.get('post_success', False) and input_image and output_image and title_text and prompt_text:
     # Show spinner while uploading images
     with status_placeholder:
         with st.spinner("📤 Uploading images to Webflow..."):
@@ -385,8 +396,9 @@ if st.session_state.get('is_posting', False) and not st.session_state.get('post_
             "isArchived": False,
             "isDraft": True,
             "fieldData": {
-                "name": f"Post - {prompt_text[:50]}...",  # Using first 50 chars as name
-                "slug": f"post-{abs(hash(prompt_text))}",  # Generate slug
+                "name": title_text,  # Using the title field
+                "slug": f"post-{abs(hash(title_text))}",  # Generate slug from title
+                "prompt-title": title_text,
                 "prompt": prompt_text,
                 "prompt-tags": selected_tag_ids,  # Post tag IDs as array
                 "input-image": input_image_data.get("url"),
