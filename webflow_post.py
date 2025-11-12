@@ -491,7 +491,7 @@ def upload_image_to_webflow(image_file, api_token: str, site_id: str, folder_id:
 def post_to_webflow(api_token: str, collection_id: str, data: dict) -> bool:
     """Post data to Webflow collection"""
     try:
-        url = f"https://api.webflow.com/v2/collections/{collection_id}/items"
+        url = f"https://api.webflow.com/v2/collections/{collection_id}/items/live?skipInvalidFiles=true"
         
         headers = {
             "Authorization": f"Bearer {api_token}",
