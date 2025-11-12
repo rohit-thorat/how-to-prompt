@@ -549,7 +549,7 @@ if st.session_state.get('is_posting', False) and not st.session_state.get('post_
         # Note: Adjust field names according to your Webflow collection schema
         post_data = {
             "isArchived": False,
-            "isDraft": True,
+            "isDraft": False,
             "fieldData": {
                 "name": title_text,  # Using the title field
                 "slug": f"post-{abs(hash(title_text))}",  # Generate slug from title
